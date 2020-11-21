@@ -35,7 +35,6 @@
   @include button-size($btn-padding-y-sm, $btn-padding-x-sm, $btn-font-size-sm, $btn-border-radius-sm);
 }
 
-
 // btn type
 .btn-primary{
   @include button-style($primary, $primary, $white)

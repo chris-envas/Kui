@@ -1,17 +1,8 @@
 import React, { AnchorHTMLAttributes } from "react"
 import classNames from "classnames"
 
-export enum ButtonSize {
-    Large = "lg",
-    Small = "sm"
-}
-
-export enum ButtonType  {
-    Primary = "primary",
-    Default = "default",
-    Danger = "danger",
-    Link = "link"
-}
+export type ButtonSize = "lg" | "sm";
+export type ButtonType = "primary" | "default" | "danger" | "link"
 
 interface BaseButtonFromProps {
     className?: string,
@@ -22,10 +13,13 @@ interface BaseButtonFromProps {
     children: React.ReactNode,
 }
 
-// join Native all the button props
+// join Native all the button props 继承原生标签所有属性
 type NativeButtonProps = BaseButtonFromProps & React.ButtonHTMLAttributes<HTMLElement> 
 type AnchorButtonProps = BaseButtonFromProps & React.AnchorHTMLAttributes<HTMLElement>
-// set all the props is partial
+/*
+*   set all the props optional by Partial
+*   Partial 是由TypsScript提供快速遍历所有属性为可选项的 API
+*/
 export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>
 
 const Button: React.FC<ButtonProps> = (props) => {
@@ -36,16 +30,15 @@ const Button: React.FC<ButtonProps> = (props) => {
         size,
         href,
         children,
+        style,
         ...otherProps
     } = props
-
     const classNamesTotal = classNames('btn', className, {
         [`btn-${btnType}`]: btnType,
         [`btn-${size}`]: size,
-        'disabled': (btnType === ButtonType.Link) && disabled
+        'disabled': (btnType === "link") && disabled
     })
-
-    if(btnType === ButtonType.Link) {
+    if(btnType === "link") {
         return (
             <a 
                 className={classNamesTotal}
@@ -60,6 +53,7 @@ const Button: React.FC<ButtonProps> = (props) => {
             <button
                 className={classNamesTotal}
                 disabled={disabled}
+                style={style}
                 {...otherProps}
             >
                 {children}
@@ -70,7 +64,7 @@ const Button: React.FC<ButtonProps> = (props) => {
 
 Button.defaultProps = {
     disabled: false,
-    btnType: ButtonType.Default
+    btnType: "default"
 }
 
 export default Button

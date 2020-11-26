@@ -7,7 +7,13 @@ module.exports = {
   "addons": [
     "@storybook/addon-links",
     "@storybook/addon-q",
-    "@storybook/preset-create-react-app"
+    "@storybook/preset-create-react-app",
+    {
+      name: "@storybook/addon-essentials",
+      options: {
+        backgrounds: false,
+      }
+    },
   ],
   webpackFinal: async (config, { configType }) => {
     config.module.rules.push({
